@@ -1,0 +1,174 @@
+﻿@model m_edubill_co_kr.ViewModels.OrderItemViewModel
+@{
+
+}
+<style>
+.text_overflow{
+!important;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;}
+</style>
+<script type="text/javascript" src="~/Scripts/Library/top_menu.js"></script>
+<article data-role="page" class="order-page">
+    @*Header*@
+    <header data-role="header" class="blue-backgroud" data-theme="c" data-position="fixed" data-tap-toggle="false">
+        <div id="main_wrap">
+            <div class="top_wrap">
+                <div class="top_bg">
+                    <div class="menu_btn"><img src="~/Content/Theme/images/icons-png/top_btn.png"></div>
+                    <div class="top_paging">주문하기</div>
+                    <div class="top_logout"><a href="#" onclick="Logout()"><img src="~/Content/Theme/images/icons-png/login_btn.png"></a></div>
+                    
+                </div>
+            </div>
+        </div>
+        <div id="order_top_wrap">
+            @*Search*@
+            <div class="ui-middle-box">
+                <input id="FilterInput" type="search" class="ui-mini" onchange="ProductFilter()" />
+            </div>
+            @*Sort*@
+            <div id="Sort_Input" data-role="controlgroup" data-type="horizontal">
+                <a data-type="Code" class="ui-btn ui-icon-arrow-u ui-btn-icon-left on" onclick="Sort_Input_Select()">코드순</a>
+                <a data-type="Name" class="ui-btn ui-icon-arrow-u ui-btn-icon-left" onclick="Sort_Input_Select()">품명순</a>
+            </div>
+        </div>
+        @*ProductGroups*@
+        <article id="ProductGroups">
+            <span class="grd_prev"></span>
+            <span class="grd_next"></span>
+            <div id="ProductGroups_Viewer" class="wrapper">
+                <div class="scroller" style="z-index: 2000;">
+                    <ul>
+                        @for (int i = 0; i < Model.ProductGroups.Count; i++)
+                        {
+                            var mProductGroup = Model.ProductGroups[i];
+                            <li data-groupcode="@mProductGroup.Code">
+                                <a onclick="ProductGroupSelect()">@mProductGroup.Name</a>
+                            </li>
+                        }
+                        <li class="all" data-groupcode="All">
+                            <a onclick="ProductGroupSelect()">전체</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </article>
+    </header>
+    <div role="main" class="ui-content">
+        @*Products*@
+        <article id="Products">
+            <ul data-role="listview">
+                @for (int i = 0; i < Model.Products.Count; i++)
+                {
+                    var mProducts = Model.Products[i];
+                    <li data-groupcode="@mProducts.GroupCode"
+                        data-productcode="@mProducts.Code"
+                        data-productname="@mProducts.Name"
+                        data-productunit="@mProducts.Unit">
+                        @if (ViewBag.needThumbnail)
+                        {
+                            if (!String.IsNullOrEmpty(mProducts.ThumbnailPath))
+                            {
+                                <img class="ThumbnailPath" src='@mProducts.ThumbnailPath' />
+                            }
+                            else
+                            {
+                                <img />
+                            }                        
+                        }
+                        <div class="text_overflow">
+                            <span class="ProductName">@mProducts.Name</span>
+                        </div>
+                        <div class="text_overflow">
+                            <span class="ProductSeq">[@((i + 1).ToString("N0"))]</span>
+                            <span class="ProductCode">[@mProducts.Code]</span>
+                            <span class="ProductPrice">@mProducts.Price.ToString("N0")원</span>
+                        </div>
+                        <div class="text_overflow">
+                            <span class="ProductUnit">@mProducts.Unit</span>
+                        </div>
+                        @if (mProducts.IsOut)
+                        {
+                            <span class="ui-li-count order-product-count v-isout" data-code="@mProducts.Code"
+                                  data-price="@mProducts.Price" data-count="0">
+                                <span class="colorRed">품절</span>
+                            </span>
+                        }
+                        else if (mProducts.NotWeek)
+                        {
+                            <span class="ui-li-count order-product-count v-notweek" data-code="@mProducts.Code"
+                                  data-price="@mProducts.Price" data-count="0">
+                                <span class="colorRed">요일아님</span>
+                            </span>
+                        }
+                        else
+                        {
+                            <span class="ui-li-count order-product-count" data-code="@mProducts.Code"
+                                  data-price="@mProducts.Price" data-count="0">
+                                <input type="number"  onchange="CalculateSum()" onfocus="InputReady()"/>
+                            </span>
+                        }
+                    </li>
+                }
+            </ul>
+        </article>
+    </div>
+    <div id="order_footer_wrap">
+        <footer data-role="footer" class="order-footer" data-position="fixed" data-tap-toggle="false">
+            <article id="SumViewer" class="order-footer">
+                <div class="ui-input-text ui-mini">
+                    <div class="ui-grid-a">
+                        <div class="ui-block-a">
+                            <div>가능금액 : <span>@ViewBag.UseMoney</span></div>
+                        </div>
+                        <div class="ui-block-b">
+                            <div id="SumViewer_Value"></div>
+                        </div>
+                    </div>
+                    <span class="ui-price-text data-vatflag price_color_2" id="vatflag"  data-value="@ViewBag.vatflag"/> 
+                    @*<span class="ui-mini">총 합계 금액 (수량):</span>
+                        <span class="ui-price-text" id="SumViewer_Value">0원 (0개)</span>*@
+                </div>
+            </article>
+            <div class="ui-grid-a ui-mini">
+                <div class="ui-block-a">
+                    <div class="btn_1"><a href="#" onclick="AddCartItems()">장바구니 담기</a></div>
+                </div>
+                
+                <div class="ui-block-b">
+                    <div class="btn_2"><a href='#' onclick="GoCart()">장바구니 보기</a></div>
+                </div>
+            </div>
+        </footer>
+    </div>
+</article>
+<div class="dummy_box"></div>
+<div class="menu_wrap">
+    <div class="menu_box">
+        <div class="top_btn">
+            <div><a href=""onclick="GoHome()"><img src="~/Content/Theme/images/icons-png/home_btn.png"></a></div>
+            <div class="menu_out"><img src="~/Content/Theme/images/icons-png/x_btn.png"></div>
+        </div>
+        <div class="top_ban_btn">
+            <div><a href="/M/Order">주문하기</a></div>
+            <div><a href="/M/OrderList">주문내역</a></div>
+            <div><a href="/M/InputList"">입금내역</a></div>
+            <div><a href="/M/Setting">내정보</a></div>
+            <div><a href="">공지사항</a></div>
+        </div>
+    </div>
+</div>
+<div class="pop_thumb"></div>
+@*Script*@
+<script>
+    var AddCartItemsUrl = '@Url.Action("AddCartItems", "Order")';
+    var HasCartUrl = '@Url.Action("HasCart", "Cart")';
+    var CartUrl = '@Url.Action("Index", "Cart")';
+    var AllowOrderByTimeUrl = '@Url.Action("AllowOrderByTime")';
+    var AllowOrderByWeekUrl = '@Url.Action("AllowOrderByWeek")';
+    var AllowOrderByMisuUrl = '@Url.Action("AllowOrderByMisu")';
+</script>
+@Scripts.Render("~/bundles/jindo")
+<script src="~/Scripts/Library/Order.js?Ver=@DateTime.Now.ToBinary()"></script>

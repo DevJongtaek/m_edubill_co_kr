@@ -1,0 +1,63 @@
+﻿@{
+}
+<article data-role="page" class="login-page login_page_wrapper">
+    @*Header*@
+    <div role="main" class="ui-content">
+        <div class="login_top_banner"><img src="~/Content/Theme/images/icons-png/login_top_banner.jpg"></div>
+        <div class="login_wrap">
+            <div class="login_form_wrap">   
+                <div class="ui-realmain_wrap">
+                    <div class="ui-realmain login_form"><input id="LoginID" type="text" style="width:100%; color:#000!important;font-size:15px;font-weight:bold;" placeholder="가맹점코드 (숫자 8자리)" value='@ViewBag.LoginID' maxlength="8"/></div>
+                    <div class="ui-realmain pass_form"><input id="Password" type="password" style="width:100%;font-size:15px;font-weight:bold;" placeholder="비밀번호" maxlength="2" /></div>
+                </div>
+                <div class="login_btn">
+                    <img src="~/Content/Theme/images/icons-png/login_btn.jpg"  onclick="Submit()">
+                </div>
+            </div>
+            <div class="ui-grid-a ui-mini">
+                    <div class="ui-block-a">
+                        @if (ViewBag.SaveId)
+                        {
+                            <input id="SaveId" type="checkbox" data-role="none" checked/><span>가맹점코드 저장</span>
+                        }
+                        else
+                        {
+                            <input id="SaveId" type="checkbox" data-role="none" /><span>가맹점코드 저장</span>
+                        }
+                    </div>
+                    <div class="ui-block-b">
+                        <input id="RemainSession" type="checkbox" data-role="none"/><span>로그인 상태 유지</span>
+                    </div>
+                </div>
+        </div>
+        <div class="login_bottom_ban"> 
+            <div><img src="~/Content/Theme/images/icons-png/login_ban_1.jpg"></div>
+            <div><img src="~/Content/Theme/images/icons-png/login_ban_2.jpg"></div>
+            <div><img src="~/Content/Theme/images/icons-png/login_ban_3.jpg"></div>
+        </div>
+    </div>
+    <div id="login_footer_wrap">
+        <footer data-role="footer"  data-position="fixed" data-tap-toggle="false" class="login_page_footer">
+            <div class="bottom_wrap">
+                <div><span><img src="~/Content/Theme/images/icons-png/login_bottom_logo.png"></span></div>
+                <div>www.edubill.co.kr</div>
+                <div>회사명 : 에듀빌 대표 : 박양우 사업자등록번호 : 113-11-83754</div>
+                <div>주소 : 서울시 금천구 디지털로 9길 65, 백상스타타워 1차 408호</div>
+                <div>전산장애신고 : 02-853-5111 FAX : 02-853 -5112</div>
+                <div>Copyright 2004 edubill co.ltd. All Rights Reserved</div>
+            </div>
+        </footer>
+    </div>
+</article>
+@*Script*@
+<script>
+    var LoginUrl = '@Url.Action("Login")';
+    var IsServiceUrl = '@Url.Action("IsService")';
+    var ShowError = '@ViewBag.Error';
+	function test(){
+	$.Dialog.Alert('가맹점코드 또는 비밀번호가 틀립니다. 확인 후, 다시 입력 바랍니다.');
+}
+</script>
+<script src='~/Scripts/Library/Login.js?Ver=@DateTime.Now.ToBinary()'></script>
+
+

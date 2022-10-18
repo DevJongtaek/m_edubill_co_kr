@@ -1,0 +1,6 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<parameters>
+  <parameter name="edubill_co_kr-Web.config Connection String" description="edubill_co_kr 데이터베이스에 액세스하기 위해 응용 프로그램에 의해 web.config에 사용된 연결 문자열입니다." defaultValue="Data Source=220.73.136.46;Initial Catalog=edubill_co_kr;User ID=sa;Password=qsefofedubill" tags="SqlConnectionString">
+    <parameterEntry kind="XmlFile" scope="D:\\Project\\m_edubill_co_kr\\m_edubill_co_kr\\obj\\Release\\Package\\PackageTmp\\Web\.config$" match="/configuration/connectionStrings/add[@name='edubill_co_kr']/@connectionString" />
+  </parameter>
+</parameters>

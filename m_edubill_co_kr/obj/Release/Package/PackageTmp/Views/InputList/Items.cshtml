@@ -1,0 +1,42 @@
+﻿@model IEnumerable<m_edubill_co_kr.ViewModels.InputListItemViewModel>
+
+@{
+    Layout = null;
+}
+<ul>
+    @foreach (var mInputListItem in Model)
+    {
+        <li>
+            <div>
+                <span class="font-bold">@mInputListItem.Date</span><span class="font-bold">&nbsp; &nbsp;   @mInputListItem.Time</span><span class="ui-right">@mInputListItem.Name</span>
+            </div>
+            <div class="ui-grid-a">
+                <div class="ui-block-a">
+                    <span class="field-accountno"><span class="font-bold">  @mInputListItem.AccountNo</span></span>
+                </div>
+                <div class="ui-block-b ui-right-box">
+                    <span class="ui-font-large font-bold">@mInputListItem.Amt</span><span class="ui-unit-label">원</span>
+                </div>
+            </div>
+            @*<div class="ui-right-box">
+                <span class="field-accountno"><span class="ui-label">계좌번호</span><span class="font-bold">@mInputListItem.AccountNo</span></span>
+            </div>*@
+            <div class="ui-box">
+                <div class="ui-grid-b">
+                    <div class="ui-block-a"><span class="ui-label">여신</span><span class="ui-label2">@mInputListItem.Yeosin.ToString("N0")</span><span class="ui-unit-label">원</span></div>
+                    <div class="ui-block-b"><span class="ui-label">미수</span><span class="ui-label2">@mInputListItem.Misu.ToString("N0")</span><span class="ui-unit-label">원</span></div>
+                    <div class="ui-block-c ui-right-box"><span class="font-bold field-gubun">@mInputListItem.Gubun</span></div>
+                </div>
+            </div>
+            @*<div class="ui-toggle off">
+                <div class="ui-grid-a">
+                    <div class="ui-block-a"><span class="ui-label">여신</span><span class="font-bold">@mInputListItem.Yeosin</span><span class="ui-unit-label">원</span></div>
+                    <div class="ui-block-b"><span class="ui-label">미수</span><span class="font-bold">@mInputListItem.Misu</span><span class="ui-unit-label">원</span></div>
+                </div>
+                <div class="ui-grid-a">
+                    <div class="ui-block-a"><span class="ui-label">주문</span><span class="font-bold">@mInputListItem.Gubun</span></div>
+                </div>
+            </div>*@
+        </li>
+    }
+</ul>

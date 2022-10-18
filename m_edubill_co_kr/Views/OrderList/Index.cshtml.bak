@@ -1,0 +1,68 @@
+
+@{
+    
+}
+<script type="text/javascript" src="~/Scripts/Library/top_menu.js"></script>
+<article data-role="page" class="orderlist-page">
+    <header data-role="header" data-position="fixed" data-tap-toggle="false">
+        <div id="main_wrap">
+            <div class="top_wrap">
+                <div class="top_bg">
+                    <div class="menu_btn"><img src="~/Content/Theme/images/icons-png/top_btn.png"></div>
+                    <div class="top_paging">주문내역</div>
+                    <div class="top_logout"><a href="#" onclick="Logout()"><img src="~/Content/Theme/images/icons-png/login_btn.png"></a></div>
+                    
+                </div>
+            </div>
+        </div>
+    </header>
+    <div id="orderlist_top_wrap">
+        <article id="Filter" class="ui-mini ui-shadow ui-alt-icon">
+            <div class="ui-icon-search ui-icon"></div><span class="ui-title">기간 설정</span>
+            <div class="ui-grid-a">
+                <div class="ui-block-a">
+                    <input type="text" value='@ViewBag.From' id="From" class="ui-input-date">
+                </div>
+                <div class="ui-block-b">
+                    <input type="text" value='@ViewBag.To' id="To" class="ui-input-date">
+                </div>
+            </div>
+            <div class="ui-grid-solo">
+                <div class="ui-block-a">
+                    <a data-role="button" data-theme="a" onclick="LoadItems()">조회</a>
+                </div>
+            </div>
+            <div class="search_info">"주문일시"&nbsp;&nbsp;<span>클릭시, 조회 됩니다.</span></div>
+        </article>
+        <article id="Items" class="ui-mini">
+
+        </article>
+    </div>
+</article>
+<div class="dummy_box"></div>
+<div class="menu_wrap">
+    <div class="menu_box">
+        <div class="top_btn">
+            <div><a href=""onclick="GoHome()"><img src="~/Content/Theme/images/icons-png/home_btn.png"></a></div>
+            <div class="menu_out"><img src="~/Content/Theme/images/icons-png/x_btn.png"></div>
+        </div>
+        <div class="top_ban_btn">
+            <div><a href="/M/Order">주문하기</a></div>
+            <div><a href="/M/OrderList">주문내역</a></div>
+            <div><a href="/M/InputList">입금내역</a></div>
+            <div><a href="/M/Setting">내정보</a></div>
+            <div><a href="">공지사항</a></div>
+        </div>
+    </div>
+</div>
+@*Script*@
+<script>
+    var LogoutUrl = '@Url.Action("Logout")';
+    var ItemsUrl = '@Url.Action("Items")';
+    var DetialUrl = '@Url.Action("Detail")';
+</script>
+<script src="~/Scripts/Library/OrderList.js?Ver=@DateTime.Now.ToBinary()"></script>
+
+
+
+

@@ -1,0 +1,18 @@
+﻿
+@{
+}
+
+<script>
+    var HomeUrl = '@Url.Action("Index","Home")';
+    var Flag = '@ViewBag.Flag';
+    var PhoneNo = '@ViewBag.PhoneNo';
+    $(function () {
+        var $Message = Flag + '<br><br>' + '체인본사로 문의 바랍니다.' + '<br>' + '(☎ ' + PhoneNo + ')';
+        $.Dialog.NavigationBox('주문 차단', $Message, {
+            Text: '확인', Method: function () {
+                window.location.href = HomeUrl;
+            }
+        });
+    });
+</script>
+

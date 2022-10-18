@@ -1,0 +1,161 @@
+﻿@model m_edubill_co_kr.ViewModels.CartViewModel
+
+@{
+    
+}
+<style>
+.text_overflow{
+width: 280px!important;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;}
+</style>
+<script type="text/javascript" src="~/Scripts/Library/top_menu.js"></script>
+<article data-role="page" class="cart-page">
+    <header data-role="header" data-theme="b" data-position="fixed" data-tap-toggle="false">
+        <div id="main_wrap">
+            <div class="top_wrap">
+                <div class="top_bg">
+                    <div class="menu_btn"><img src="~/Content/Theme/images/icons-png/top_btn.png"></div>
+                    <div class="top_paging">장바구니</div>
+                    <div class="top_logout"><a href="#" onclick="Logout()"><img src="~/Content/Theme/images/icons-png/login_btn.png"></a></div>
+                    
+                </div>
+            </div>
+        </div>
+    </header>
+    <div id="cart_top_wrap">
+        <div role="main" class="ui-content">
+            <article id="CartItems">
+                <ul data-role="listview" class="ui-mini">
+                    @for (int i = 0; i < Model.CartItems.Count; i++)
+                    {
+                        var mCartItem = Model.CartItems[i];
+                        <li data-cartid='@mCartItem.Id'>
+                                <div class="text_overflow">
+                                    <span class="ProductCode ">@mCartItem.ProductCode</span>
+                                    <span class="ProductName">@mCartItem.ProductName</span>
+                                </div>
+                                <div class="text_overflow">
+                                    <span class="ProductPrice">@mCartItem.ProductPrice.ToString("N0")원</span>
+                                    <span class="ProductUnit">@mCartItem.ProductUnit</span>
+                                </div>
+                                <div class="text_overflow">
+                                    <span class="ProductAmt">[공급가]@mCartItem.Amt.ToString("N0")원</span>
+                                    <span class="ProductTax">[세액]@mCartItem.Tax.ToString("N0")원</span>
+                                </div>
+
+                            <span class="ui-price-text data-vatflag price_color_2" id="vatflag"  data-value="@Model.vatflag"/> 
+                                <span class="ui-li-count cart-product-count" data-code="@mCartItem.ProductCode"
+                                      data-price="@mCartItem.ProductPrice" data-hastax="@mCartItem.HasTax" data-count="0"><input type="number" placeholder="0" onchange="UpdateItem()" value="@mCartItem.Count" /></span>
+                        </li>
+                    }
+                </ul>
+            </article>
+            <article id="Comment" class="ui-mini">
+                @*class="ui-icon-comment ui-icon"*@
+                <textarea placeholder="남기고 싶은말" ></textarea>
+            </article>
+          
+              @if (@Model.d_requestday == "y")
+              {
+                <div id="cart_footer_wrap2">
+                  <article id="request_day" class="ui-mini ui-shadow ui-alt-icon">
+          
+                    <div class="ui-field-contain">
+                        <label for="textinput-passward" class="font-size-13"> 배달요청일자 :</label>
+                            <input type="text" value='@ViewBag.From' id="From" class="ui-input-date">
+                
+                       
+                    </div>
+        
+                 </article>
+               </div>
+              }
+        </div>
+    </div>
+    <div id="cart_footer_wrap">
+        <footer data-role="footer" class="cart-footer" data-position="fixed" data-tap-toggle="false">
+            <div class="price_wrap">
+                <div class="down_btn dw"><img src="~/Content/Theme/images/icons-png/down_btn.png"></div>
+                <article id="MisuViewer">
+                    <div>
+                        <span class="ui-mini price_color_2 price_font">여신금액:</span>
+                        <span class="ui-price-text data-Yeosin price_color_2" data-value="@Model.Yeosin.ToString("N0")원">@Model.Yeosin.ToString("N0")원</span>
+                    </div>
+                    <div>
+                        <span class="ui-mini price_color_2 price_font">미수금액:</span>
+                        <span class="ui-price-text data-Misu price_color_2" data-value=" @Model.Misu.ToString("N0") 원">@Model.Misu.ToString("N0")원</span>
+                    </div>
+                    <div>
+                        <span class="ui-mini ui-price-blue price_color_2">주문가능 금액:</span>
+                        <span class="ui-price-text data-Current price_color_2" data-value="@Model.Current.ToString("N0")원">@Model.Current.ToString("N0")원</span>
+                        <!-- <span class="ui-price-text data-myflag price_color_2" data-value="@Model.myflag">@Model.myflag</span>-->
+                    </div>
+                    <div>
+                        <span class="ui-mini ui-price-blue price_color_3">주문합계 금액:</span>
+                        <span class="ui-price-text data-Current price_color_3" id="SumViewer_Value">0원</span>
+                       
+                        <input id="OrderAmt" type="hidden" />
+                    </div>
+                    <input id="Current" type="hidden" value="@Model.Current" />        
+                    <span class="ui-price-text data-myflag price_color_2" id="myflag"  data-value="@Model.myflag"/> 
+                    <span class="ui-price-text data-myflag_select price_color_2" id="myflag_select"  data-value="@Model.myflag_select"/> 
+                     <input type="hidden" value='@ViewBag.wdate' id="wdate">
+                          <input type="hidden" value='@ViewBag.Now' id="Now">
+                      
+                </article>
+                @*<article id="SumViewer">
+                    <div class="ui-input-text">
+                        <span class="ui-mini">총 합계 금액 (수량):</span>
+                        <span class="ui-price-text" id="SumViewer_Value">0원 (0개)</span>
+                        <input id="OrderAmt" type="hidden" />
+                    </div>
+                </article>*@
+            </div>
+            <div class="ui-grid-b ui-mini">
+                <div class="ui-block-a">
+                    <a class="ui-alt-icon ui-btn ui-btn-d ui-btn-icon-left ui-icon-back ui-background-gray" href="#" onclick="GoOrder()">이전</a>
+                </div>
+                <div class="ui-block-b">
+                    <a class="ui-btn ui-btn-d ui-btn-icon-left ui-icon-delete ui-alt-icon ui-background-gray" href="#" onclick="ClearCart()">비우기</a>
+                </div>
+       
+                <div class="ui-block-c">
+                    <a class="ui-btn ui-btn-b ui-btn-icon-left ui-icon-check" href="#" onclick="ConfirmOrder()" id="aConfirmOrder">주문하기</a>
+                </div>
+               
+            </div>            
+        </footer>
+    </div>
+</article>
+<div class="dummy_box"></div>
+<div class="menu_wrap">
+    <div class="menu_box">
+        <div class="top_btn">
+            <div><a href=""onclick="GoHome()"><img src="~/Content/Theme/images/icons-png/home_btn.png"></a></div>
+            <div class="menu_out"><img src="~/Content/Theme/images/icons-png/x_btn.png"></div>
+        </div>
+        <div class="top_ban_btn">
+            <div><a href="/M/Order">주문하기</a></div>
+            <div><a href="/M/OrderList">주문내역</a></div>
+            <div><a href="/M/InputList"">입금내역</a></div>
+            <div><a href="/M/Setting">내정보</a></div>
+            <div><a href="">공지사항</a></div>
+        </div>
+    </div>
+</div>
+@*Script*@
+<script>
+    var AddCartItemsUrl = '@Url.Action("AddCartItems", "Order")';
+    var OrderUrl = '@Url.Action("Index", "Order")';
+    var HomeUrl = '@Url.Action("Index", "Home")';
+    var OrderListUrl = '@Url.Action("Index", "OrderList")';
+    var ClearCartUrl = '@Url.Action("ClearCart")';
+    var ConfirmOrderUrl = '@Url.Action("CorfirmOrder")';
+    var UpdateItemUrl = '@Url.Action("UpdateItem")';
+    var AllowOrderByTimeUrl = '@Url.Action("AllowOrderByTime", "Order")';
+    var AllowOrderByWeekUrl = '@Url.Action("AllowOrderByWeek", "Order")';
+    var AllowOrderByMisuUrl = '@Url.Action("AllowOrderByMisu", "Order")';
+</script>
+<script src='~/Scripts/Library/Cart.js?Ver=@DateTime.Now.ToBinary()'></script>

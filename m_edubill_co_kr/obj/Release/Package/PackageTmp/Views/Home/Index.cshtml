@@ -1,0 +1,92 @@
+﻿@model m_edubill_co_kr.ViewModels.HomeViewModel
+
+@{
+
+}
+<script type="text/javascript" src="~/Scripts/Library/top_menu.js"></script>
+<style type="text/css">
+A:link    { text-decoration:none; color:#ffb328; };
+
+A:visited    { text-decoration:none; color:#ffb328; };
+A:active    { text-decoration:none; color:#ffb328; };
+
+A:hover    { text-decoration:none; color:#ffb328; };
+
+</style>
+<article data-role="page" class="home-page">
+    @*Header*@
+        <div role="main" class="ui-content">
+            @*style="background:url('http://edubill.co.kr/fileupdown/app/edubill5.gif') no-repeat 50% 50%;"*@
+            <div id="main_wrap">
+                <div class="top_wrap">
+                    <div class="top_bg">
+                        <div class="menu_btn"><img src="~/Content/Theme/images/icons-png/top_btn.png"></div>
+                        <div class="top_paging">@Model.Tilte</div>
+                        <div class="top_logout"><a href="#" onclick="Logout()"><img src="~/Content/Theme/images/icons-png/login_btn.png"></a></div>
+                    </div>
+                </div>
+             <div class="main_banner"><img src="@ViewBag.LogoSource" alt="" style="width:100%;" /></div>   
+                <div class="main_btn">
+                    <div>본사<span style="font-weight:bold;"><a href="tel:@Model.BSubPhoneNo">@Model.BSubPhoneNo</a></span></div>
+                    <div>물류<span style="font-weight:bold;"><a href="tel:@Model.SubPhoneNo">@Model.SubPhoneNo</a></span></div>
+                </div>
+                <div class="main_bottom_btn">
+                    <div class="order_btn">
+                        <div><a href='#' onclick="GoOrder()"><img src="~/Content/Theme/images/icons-png/main_order.jpg"></a></div>
+                    </div>
+                    <div class="info_btn">
+                        <div class="ban_1">
+                            <div><a href='@Url.Action("Index","OrderList")'><img src="~/Content/Theme/images/icons-png/main_orderlist_1.jpg"></a></div>
+                        </div>
+                        <div class="ban_2">
+                            <div><a href='@Url.Action("Index","InputList")'><img src="~/Content/Theme/images/icons-png/main_orderlist_2.jpg"></a></div>
+                        </div>
+                        <div class="ban_3">
+                            <div><a href='@Url.Action("Index","Setting")'><img src="~/Content/Theme/images/icons-png/main_myinfo.jpg"></a></div>
+                        </div>
+                    </div>
+                </div>
+            @*<div class="responsive-container">
+                    <div class="dummy"</div>
+                    <div class="img-container">
+                        <div class="centerer"></div>
+                        <img src="http://edubill.co.kr/fileupdown/app/edubill5.gif" alt="" />
+                    </div>
+                </div>*@
+            </div>
+        </div>
+        <div id="mainpage_footer_wrap">
+            <footer data-role="footer" data-position="fixed" data-tap-toggle="false" data-theme="d">
+                <article class="ui-mini home-footer">
+                    <span>@Model.BSubInfo</span>
+                </article>
+            </footer>
+        </div>
+</article>
+<div class="dummy_box"></div>
+<div class="menu_wrap">
+    <div class="menu_box">
+        <div class="top_btn">
+            <div><a href="" onclick="GoHome()"><img src="~/Content/Theme/images/icons-png/home_btn.png"></a></div>
+            <div class="menu_out"><img src="~/Content/Theme/images/icons-png/x_btn.png"></div>
+        </div>
+        <div class="top_ban_btn">
+            <div><a href="/M/Order">주문하기</a></div>
+            <div><a href="/M/OrderList">주문내역</a></div>
+            <div><a href="/M/InputList"">입금내역</a></div>
+            <div><a href="/M/Setting">내정보</a></div>
+            <div><a href="">공지사항</a></div>
+        </div>
+    </div>
+</div>
+@*Script*@
+<script>
+    var OrderUrl = '@Url.Action("Index","Order")';
+    var CartUrl = '@Url.Action("Index","Cart")';
+    var HasCartUrl = '@Url.Action("HasCart", "Cart")';
+    var ClearCartUrl = '@Url.Action("ClearCart", "Cart")';
+    var $StaticNotice = '@Html.Raw(Model.StaticNotice)';
+    var $FlagNotice = '@Html.Raw(Model.FlagNotice)';
+    var $LocalNotice = '@Html.Raw(Model.LocalNotice)';
+</script>
+<script src="~/Scripts/Library/Home.js?Ver=@DateTime.Now.ToBinary()"></script>

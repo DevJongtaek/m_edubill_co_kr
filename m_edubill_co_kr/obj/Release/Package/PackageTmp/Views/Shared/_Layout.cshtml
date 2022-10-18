@@ -1,0 +1,28 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=no">
+    <title>에듀빌</title>
+    <link href="~/Content/jquery.mobile-1.4.5.css" rel="stylesheet"/>
+    <link href="~/Content/Theme/m_edubill_co_kr.css" rel="stylesheet" />
+    <link href="~/Content/Theme/jquery.mobile.icons.min.css" rel="stylesheet" />
+    <link href="~/Content/Site.css" rel="stylesheet" />
+    @Scripts.Render("~/bundles/jquery")
+    <script src="~/Scripts/Library/Common.js?Ver=@DateTime.Now.ToBinary()"></script>
+    <script src="~/Scripts/Library/Dialog.js?Ver=@DateTime.Now.ToBinary()"></script>
+    <script>
+        var HomeUrl = '@Url.Action("Index", "Home")';
+        var LogoutUrl = '@Url.Action("Logout", "Home")';
+    </script>
+    @*datebox*@
+    <link rel="stylesheet" type="text/css" href="~/Content/jqm-datebox.css" />
+    <script type="text/javascript" src="~/Scripts/jqm-datebox.core.js"></script>
+    <script type="text/javascript" src="~/Scripts/jqm-datebox.mode.flipbox.js"></script>
+    <script src="~/Scripts/jquery.mobile.datebox.i18n.ko.utf8.js"></script>
+</head>
+<body>
+    @RenderBody()
+</body>
+</html>

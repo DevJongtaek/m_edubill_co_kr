@@ -1,0 +1,26 @@
+﻿@model IEnumerable<m_edubill_co_kr.ViewModels.OrderListItem>
+@{
+    Layout = null;
+}
+
+<table cellspacing="0" cellpadding="0" border="0">
+    <thead>
+        <tr>
+            @*<th class="ViewDatail"></th>*@
+            <th class="OrderDate top_1">주문일시</th>
+            <th class="OrderAmt top_2">주문금액</th>
+            <th class="DeliveryDate top_3">배달일자</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var mOrderItem in Model)
+        {
+            <tr>
+                @*<td class="ViewDatail"><a class="ui-td-icon-search" onclick='GoDetail("@mOrderItem.OrderId")'></a></td>*@
+                <td class="OrderDate"><a onclick='GoDetail("@mOrderItem.OrderId")'>@mOrderItem.OrderDate</a></td>
+                <td class="OrderAmt">@mOrderItem.OrderAmt</td>
+                <td class="DeliveryDate">@mOrderItem.DeliveryDate</td>
+            </tr>
+        }
+    </tbody>
+</table>
